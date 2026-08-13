@@ -220,9 +220,25 @@ zodat `npm test` ook in het geïnstalleerde pakket draait (zie `files` in
 - **`core.card.html`** verwijst naar de runtime van het designproject
   (`_ds_bundle.js`); het is hier referentiemateriaal, geen werkende demo.
 
+## Onderhoud & release
+
+Voor wie hieraan verder bouwt (mens of AI) — de regels van `AGENTS.md` in vic-platform
+gelden ook hier:
+
+- **Wijzigen** = eigen branch vanaf verse `main` → PR → Codex-review → cockpit merget.
+  Nooit rechtstreeks op `main`.
+- **Zelftest**: `npm test` valideert tokens tegen `bron/handboek-tekst.md` én de
+  componenten (token-gebruik, varianten, ESM-markering, tarball-inhoud). Hij faalt hard
+  (exitcode 1) en reist mee in het pakket. Nieuwe tokens of componenten krijgen een check
+  in dezelfde stijl — mét lege-blok-guard, zie de bestaande scripts.
+- **Release** = versie ophogen in `package.json` (semver: nieuwe tokens/componenten = minor,
+  fixes = patch), mergen, dan een git-tag `vX.Y.Z` + GitHub-release. Apps pinnen op de tag:
+  `npm install github:Veenweiden-Innovatiecentrum/vic-huisstijl#vX.Y.Z`.
+- **Bron is leidend**: wijkt een token af van `bron/handboek-tekst.md`, dan wint het
+  handboek — of het handboek wordt eerst bewust aangepast, nooit stilzwijgend.
+
 ## Status
 
-Sinds issue #6 is dit een **installeerbaar pakket** (via git-URL). Issue #7 (`0.2.0`)
-voegt `Button` en `DataTable` toe als consumeerbare componenten, met React als
-`peerDependency`. Tokens én componenten zijn gevalideerd (`npm test`); issue #8
-regelt registry-publicatie.
+`v0.2.0` (13-08-2026): tokens (#6) + componenten Button/DataTable (#7), gevalideerd en
+versioned importeerbaar via git-tag (#8). Registry-publicatie (npm/GitHub Packages) is
+bewust uitgesteld tot een app het nodig heeft — de git-tag-route dekt Fase 2.
