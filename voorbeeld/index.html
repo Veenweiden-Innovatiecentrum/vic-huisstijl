@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VIC-tokens — minimaal voorbeeld</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Alleen demo-layout; alle merkwaarden komen uit de tokens. */
+    body { margin: 0; background: var(--surface-page); }
+    main { max-width: var(--container-narrow); margin: 0 auto; padding: var(--space-7) var(--space-5); display: grid; gap: var(--space-6); }
+    .swatches { display: flex; flex-wrap: wrap; gap: var(--space-3); padding: 0; margin: 0; list-style: none; }
+    .swatches li { width: 96px; font-size: var(--text-xs); }
+    .swatch { height: 56px; border: 1px solid var(--vic-border); border-radius: var(--radius-sm); }
+    .card { background: var(--surface-card); border: 1px solid var(--vic-border); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: var(--space-5); display: grid; gap: var(--space-3); }
+    .dark { background: var(--surface-dark); border-radius: var(--radius-md); padding: var(--space-5); }
+    .dark .vic-h2 { color: var(--text-inverse); }
+    .knop { display: inline-block; font: 700 var(--text-sm)/1 var(--font-sans); color: var(--text-inverse); background: var(--button-primary); border: 0; border-radius: var(--radius-sm); padding: var(--space-3) var(--space-4); cursor: pointer; }
+    .knop:hover { background: var(--button-primary-hover); }
+    .knop.secundair { background: var(--button-secondary); }
+    .knop.secundair:hover { background: var(--button-secondary-hover); }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="vic-kicker">Voorbeeld — tokens geladen via styles.css</p>
+      <h1 class="vic-h1">Veenweiden Innovatiecentrum</h1>
+      <p class="vic-body">Fris kijken, dwars denken en <strong>samenwerken</strong>.</p>
+    </header>
+
+    <section>
+      <h2 class="vic-h2">Kleuren</h2>
+      <ul class="swatches">
+        <li><div class="swatch" style="background: var(--vic-green)"></div>VIC-groen</li>
+        <li><div class="swatch" style="background: var(--vic-blue)"></div>VIC-donkerblauw</li>
+        <li><div class="swatch" style="background: var(--vic-red)"></div>VIC-rood</li>
+        <li><div class="swatch" style="background: var(--vic-green-mid)"></div>middengroen</li>
+        <li><div class="swatch" style="background: var(--vic-green-soft)"></div>zachtgroen</li>
+        <li><div class="swatch" style="background: var(--vic-green-pale)"></div>lichtgroen</li>
+        <li><div class="swatch" style="background: var(--vic-brown)"></div>roodbruin</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2 class="vic-h2 vic-blue-heading">Typografie</h2>
+      <h3 class="vic-h3">Titel 3 in zinskast</h3>
+      <p class="vic-body">Platte tekst in zwart, met <strong>belangrijke woorden vet</strong>.</p>
+      <p class="vic-body vic-body-blue">Of platte tekst in donkerblauw — de enige twee opties.</p>
+      <p>
+        <button class="knop" type="button">Primaire knop</button>
+        <button class="knop secundair" type="button">Secundaire knop</button>
+      </p>
+    </section>
+
+    <section class="dark">
+      <h2 class="vic-h2">Wit op donkerblauw</h2>
+    </section>
+  </main>
+</body>
+</html>

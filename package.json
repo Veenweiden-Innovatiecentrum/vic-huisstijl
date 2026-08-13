@@ -1,0 +1,38 @@
+{
+  "name": "@veenweiden-innovatiecentrum/vic-huisstijl",
+  "version": "0.1.0",
+  "description": "VIC-huisstijl als design tokens (CSS-variabelen): kleuren, typografie, spacing en fonts uit het VIC huisstijl 2024-handboek.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Veenweiden-Innovatiecentrum/vic-huisstijl.git"
+  },
+  "homepage": "https://github.com/Veenweiden-Innovatiecentrum/vic-huisstijl#readme",
+  "style": "styles.css",
+  "exports": {
+    ".": "./styles.css",
+    "./styles.css": "./styles.css",
+    "./tokens/colors.css": "./tokens/colors.css",
+    "./tokens/typography.css": "./tokens/typography.css",
+    "./tokens/spacing.css": "./tokens/spacing.css",
+    "./tokens/fonts.css": "./tokens/fonts.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "styles.css",
+    "tokens/"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "test": "node scripts/check-tokens.mjs"
+  },
+  "keywords": [
+    "vic",
+    "veenweiden",
+    "huisstijl",
+    "design-tokens",
+    "css"
+  ]
+}
