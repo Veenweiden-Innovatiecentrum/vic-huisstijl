@@ -20,15 +20,16 @@ niet meegekomen; dit is alleen de herbruikbare huisstijl.
 | `styles.css` | Verzamelbestand dat de vier token-bestanden importeert |
 | `guidelines/` | 13 merkstijl-kaarten (HTML): kleuren, typografie, spacing, logo-regels, beeldmerk, pay-off, fotografie |
 | `components/core/` | `Button` en `DataTable` (React), elk met typedefinitie en gebruiksvoorbeeld (`*.prompt.md`) |
-| `assets/logo/` | `VIC_Basislogo.png` en `VIC_Beeldmerk.png` |
+| `assets/logo/` | Basislogo in alle vormen — vector (`.eps`, `.svg`, `.pdf`), druk-JPG (300 dpi) en transparante PNG's in drie maten — plus beeldmerk en mailvariant. Bron: SharePoint `VICkernteam › VIC Huisstijl › Logo's › VIC logo's` |
 
 ## Wat er (nog) niet in zit — bewust
 
-- **`VIC huisstijl 2024.pdf`** (het bronhandboek) en de **voorbeeldfoto's** bij de
-  fotografie-kaart: groter dan de 256 KB-overdrachtslimiet van de design-koppeling.
-  Ze staan in het designproject (`uploads/` en `assets/photos/`); los aanleveren kan
-  via SharePoint of handmatig. De fotografie-kaart (`guidelines/brand-fotografie.html`)
-  toont daardoor nu lege beelden — de regels erin kloppen wel.
+- **`VIC huisstijl 2024.pdf`** (het opgemaakte bronhandboek): de volledige tekstinhoud
+  staat in `bron/handboek-tekst.md` met verwijzing naar SharePoint; het PDF-bestand zelf
+  kan later nog worden toegevoegd maar is voor de bouw niet meer nodig.
+- De **voorbeeldfoto's** bij de fotografie-kaart: de kaart
+  (`guidelines/brand-fotografie.html`) toont daardoor nu lege beelden — de regels erin
+  kloppen wel. De foto's staan in het designproject onder `assets/photos/`.
 - **`components/site/`** (SiteHeader, SiteFooter, InvalshoekCard): gebouwd voor de
   Veenweideboeren-site; of ze generiek genoeg zijn voor het platform is een
   Fase 1-beslissing, geen gegeven.
