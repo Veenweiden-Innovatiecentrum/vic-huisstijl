@@ -64,11 +64,16 @@ ok('platte tekst via --text-body (zwart), blauw-variant beschikbaar',
    /var\(--text-body\)/.test(body) && /\.vic-body-blue\s*{\s*color:\s*var\(--text-body-blue\)/.test(typographyCss));
 ok('platte tekst zwart óf donkerblauw als alias',
    /--text-body:\s*var\(--vic-black\)/.test(colorsCss) && /--text-body-blue:\s*var\(--vic-blue\)/.test(colorsCss));
+ok('--text-heading wijst naar VIC-groen', /--text-heading:\s*var\(--vic-green\)/.test(colorsCss));
+ok('--text-heading-alt wijst naar VIC-donkerblauw', /--text-heading-alt:\s*var\(--vic-blue\)/.test(colorsCss));
+ok('--text-inverse wijst naar wit', /--text-inverse:\s*var\(--vic-white\)/.test(colorsCss));
 
 // 3. Fontkeuzes
 console.log('\n== Fonts ==');
-ok('Roboto via Google Fonts', /fonts\.googleapis\.com.*Roboto/.test(fontsCss));
-ok('Carlito (metrisch gelijk aan Calibri) meegeladen', /Carlito/.test(fontsCss));
+const importUrl = fontsCss.match(/@import\s+url\(['"]?(https:\/\/fonts\.googleapis\.com[^'")]+)/)?.[1] ?? '';
+ok('Google Fonts-import aanwezig', importUrl.length > 0);
+ok('Roboto in de import-URL', /family=Roboto([:&]|$)/.test(importUrl));
+ok('Carlito (metrisch gelijk aan Calibri) in de import-URL', /family=Carlito([:&]|$)/.test(importUrl));
 ok('--font-sans = Roboto', /--font-sans:\s*'Roboto'/.test(typographyCss));
 ok("--font-office = Carlito/Calibri", /--font-office:\s*'Carlito',\s*'Calibri'/.test(typographyCss));
 
