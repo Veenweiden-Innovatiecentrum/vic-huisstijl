@@ -1,0 +1,24 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Steunkleuren" subtitle="Groentinten en roodbruin" -->
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html, body { margin: 0; }
+  body { padding: 16px; background: var(--surface-page); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .swatch { border-radius: var(--radius-sm); height: 118px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: flex-end; font-family: var(--font-sans); }
+  .swatch b { font-size: 14px; }
+  .swatch span { font-size: 12.5px; opacity: 0.8; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="swatch" style="background: var(--vic-green-mid); color: #fff;"><b>Middengroen</b><span>#81bb63</span></div>
+  <div class="swatch" style="background: var(--vic-green-soft); color: var(--vic-blue);"><b>Zachtgroen</b><span>#d9e7ce</span></div>
+  <div class="swatch" style="background: var(--vic-green-pale); color: var(--vic-blue); border: 1px solid var(--vic-border);"><b>Lichtgroen</b><span>#e8f2e5</span></div>
+  <div class="swatch" style="background: var(--vic-brown); color: #fff;"><b>Roodbruin</b><span>#75280e</span></div>
+</div>
+</body>
+</html>

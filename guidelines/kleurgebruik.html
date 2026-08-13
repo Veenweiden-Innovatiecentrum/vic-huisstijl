@@ -1,0 +1,33 @@
+<!-- @dsCard group="Colors" viewport="700x170" name="Kleurgebruik" subtitle="Eén primaire kleur, één accent, rustige tekst" -->
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html, body { margin: 0; }
+  body { padding: 16px; background: var(--surface-page); font-family: var(--font-sans); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .demo { border: 1px solid var(--vic-border); border-radius: var(--radius-sm); padding: 14px 16px; }
+  .demo h3 { margin: 0 0 6px; font-size: 17px; text-transform: uppercase; letter-spacing: 0.02em; }
+  .demo p { margin: 0 0 10px; font-size: 13.5px; line-height: 1.5; }
+  .btn { display: inline-block; font-size: 13px; font-weight: 700; color: #fff; padding: 6px 14px; border-radius: var(--radius-sm); }
+  .rule { margin: 12px 2px 0; font-size: 13px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="demo">
+    <h3 style="color: var(--vic-green);">Groen voert</h3>
+    <p style="color: var(--vic-black);">Platte tekst in <strong>zwart</strong>, accent in rood<span style="color: var(--vic-red); font-weight: 700;">.</span></p>
+    <span class="btn" style="background: var(--vic-green);">Actie</span>
+  </div>
+  <div class="demo">
+    <h3 style="color: var(--vic-blue);">Blauw voert</h3>
+    <p style="color: var(--vic-blue);">Platte tekst in <strong>donkerblauw</strong>, steunkleur groen.</p>
+    <span class="btn" style="background: var(--vic-blue);">Actie</span>
+  </div>
+</div>
+<p class="rule">Kies één primaire kleur per uiting; meng niet alle kleuren door elkaar.</p>
+</body>
+</html>

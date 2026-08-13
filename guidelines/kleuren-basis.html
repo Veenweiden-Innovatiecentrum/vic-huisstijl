@@ -1,0 +1,23 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Basiskleuren" subtitle="VIC-groen, donkerblauw en rood (accent)" -->
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html, body { margin: 0; }
+  body { padding: 16px; background: var(--surface-page); }
+  .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .swatch { border-radius: var(--radius-sm); height: 118px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: flex-end; color: #fff; font-family: var(--font-sans); }
+  .swatch b { font-size: 15px; }
+  .swatch span { font-size: 13px; opacity: 0.85; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="swatch" style="background: var(--vic-green);"><b>VIC-groen</b><span>#3ea635 · primair</span></div>
+  <div class="swatch" style="background: var(--vic-blue);"><b>VIC-donkerblauw</b><span>#1d3176 · primair</span></div>
+  <div class="swatch" style="background: var(--vic-red);"><b>VIC-rood</b><span>#cd1719 · accent, spaarzaam</span></div>
+</div>
+</body>
+</html>
