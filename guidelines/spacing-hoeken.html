@@ -1,0 +1,22 @@
+<!-- @dsCard group="Spacing" viewport="700x160" name="Hoeken & schaduw" subtitle="Vlak en rechtlijnig; schaduw zeer terughoudend" -->
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html, body { margin: 0; }
+  body { padding: 18px 24px; background: var(--surface-tint); font-family: var(--font-sans); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .box { background: var(--vic-white); border: 1px solid var(--vic-border); height: 84px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--vic-blue); text-align: center; padding: 0 8px; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="box" style="border-radius: 0;">0px<br>vlakken</div>
+  <div class="box" style="border-radius: var(--radius-sm);">4px<br>knoppen</div>
+  <div class="box" style="border-radius: var(--radius-md);">8px<br>kaarten &amp; foto's</div>
+  <div class="box" style="border-radius: var(--radius-md); border: none; box-shadow: var(--shadow-card);">--shadow-card<br>subtiel</div>
+</div>
+</body>
+</html>
