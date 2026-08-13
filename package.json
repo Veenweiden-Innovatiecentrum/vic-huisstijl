@@ -1,7 +1,7 @@
 {
   "name": "@veenweiden-innovatiecentrum/vic-huisstijl",
-  "version": "0.1.0",
-  "description": "VIC-huisstijl als design tokens (CSS-variabelen): kleuren, typografie, spacing en fonts uit het VIC huisstijl 2024-handboek.",
+  "version": "0.2.0",
+  "description": "VIC-huisstijl als design tokens (CSS-variabelen) en kerncomponenten (React): kleuren, typografie, spacing en fonts uit het VIC huisstijl 2024-handboek, plus Button en DataTable.",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
@@ -16,25 +16,42 @@
     "./tokens/typography.css": "./tokens/typography.css",
     "./tokens/spacing.css": "./tokens/spacing.css",
     "./tokens/fonts.css": "./tokens/fonts.css",
+    "./components": {
+      "types": "./components/core/index.d.ts",
+      "default": "./components/core/index.js"
+    },
+    "./components/components.css": "./components/core/components.css",
     "./package.json": "./package.json"
   },
   "files": [
     "styles.css",
     "tokens/",
+    "components/core/Button.js",
+    "components/core/DataTable.js",
+    "components/core/index.js",
+    "components/core/Button.d.ts",
+    "components/core/DataTable.d.ts",
+    "components/core/index.d.ts",
+    "components/core/components.css",
     "scripts/check-tokens.mjs",
+    "scripts/check-components.mjs",
     "bron/handboek-tekst.md"
   ],
   "sideEffects": [
     "**/*.css"
   ],
+  "peerDependencies": {
+    "react": ">=18"
+  },
   "scripts": {
-    "test": "node scripts/check-tokens.mjs"
+    "test": "node scripts/check-tokens.mjs && node scripts/check-components.mjs"
   },
   "keywords": [
     "vic",
     "veenweiden",
     "huisstijl",
     "design-tokens",
-    "css"
+    "css",
+    "react-components"
   ]
 }

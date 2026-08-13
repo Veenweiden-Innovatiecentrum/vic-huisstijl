@@ -6,8 +6,9 @@ Fase 1 van het bouwplan — zie de issues #6 t/m #9 in `vic-platform`.
 
 ## Installatie en gebruik
 
-Het pakket heet `@veenweiden-innovatiecentrum/vic-huisstijl` (versie 0.1.0), heeft geen
-build-stap en geen dependencies. Installeren kan rechtstreeks via de git-URL
+Het pakket heet `@veenweiden-innovatiecentrum/vic-huisstijl` (versie 0.2.0), heeft geen
+build-stap en geen dependencies (React is een `peerDependency`, zie
+["Componenten"](#componenten) hieronder). Installeren kan rechtstreeks via de git-URL
 (registry-publicatie volgt in issue #8):
 
 ```sh
@@ -90,6 +91,70 @@ hoeken (`--radius-none/-sm/-md/-pill`), terughoudende schaduwen (`--shadow-card`
 Carlito is de metrisch-compatibele webvervanger van Calibri; Calibri zelf blijft de
 keuze voor kantoortoepassingen (Office).
 
+## Componenten
+
+Sinds `0.2.0` zit de kerncomponentbibliotheek (`Button`, `DataTable`) in het pakket,
+onder een eigen export zodat je ze los van de tokens kunt importeren:
+
+```js
+import { Button, DataTable } from '@veenweiden-innovatiecentrum/vic-huisstijl/components';
+import '@veenweiden-innovatiecentrum/vic-huisstijl/components/components.css';
+import '@veenweiden-innovatiecentrum/vic-huisstijl'; // tokens — components.css leunt erop
+```
+
+```jsx
+<Button variant="primary">Neem contact op</Button>
+<Button variant="link" href="/bedrijf">Zie onze activiteiten</Button>
+
+<DataTable
+  columns={['Invalshoek', 'Activiteit', 'Status']}
+  rows={[
+    ['Water', 'Klimaatslootjes', 'Lopend'],
+    ['Bodem', 'Greppelinfiltratie', 'Afgerond'],
+  ]}
+/>
+```
+
+**React is een `peerDependency` (`>=18`), geen dependency** — het pakket zelf blijft
+build-loos. De componentbestanden zijn kale ES-modules (`React.createElement`, geen
+JSX), dus er is ook geen JSX-compilatiestap nodig om ze te consumeren; een bundler
+(Vite, webpack, Next) transformeert ze net zo min als de rest van je React-code.
+
+**Hover is CSS, geen React-state:** de oorspronkelijke `Button` hield `isHover` bij
+met `useState` en berekende de hoverkleur inline. Dat is nu een CSS-klasse
+(`components/core/components.css`) met een gewone `:hover`-regel op basis van de
+tokens (`--button-primary-hover` etc.) — geen re-render per muisbeweging, geen state
+die gesynchroniseerd moet blijven met de tokens, en de props-API blijft ongewijzigd.
+
+**`Button`** (props uit `components/core/Button.d.ts`):
+
+| Prop | Type | Default | Omschrijving |
+|---|---|---|---|
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'link'` | `'primary'` | Visuele variant |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Grootte |
+| `href` | `string` | — | Rendert `<a>` in plaats van `<button>` |
+| `children` | `ReactNode` | — | Inhoud van de knop |
+| `style` | `CSSProperties` | — | Extra inline stijl |
+| `onClick` | `() => void` | — | Klik-handler |
+| `disabled` | `boolean` | — | Uitgeschakeld |
+
+Varianten: `primary` (groen), `secondary` (donkerblauw), `outline` (groene rand),
+`link` (groene tekstlink met →). Copy in zinskast, nooit hoofdletters.
+
+**`DataTable`** (props uit `components/core/DataTable.d.ts`):
+
+| Prop | Type | Default | Omschrijving |
+|---|---|---|---|
+| `columns` | `ReactNode[]` | — | Kolomkoppen |
+| `rows` | `ReactNode[][]` | — | Rijen als arrays van celinhoud |
+| `style` | `CSSProperties` | — | Extra inline stijl |
+
+Groene headerbalk, om-en-om witte/zachtgroene rijen, donkerblauwe celtekst — naar
+het VIC PPT-sjabloon.
+
+Een werkend voorbeeld met beide componenten (echt gerenderd, niet nagebouwd in CSS)
+staat in [`voorbeeld/index.html`](voorbeeld/index.html), sectie "Componenten".
+
 ## Wat je níet doet
 
 - **Kleuren mengen of verzinnen:** kies per uiting één primaire kleur (groen óf blauw),
@@ -116,15 +181,17 @@ niet meegekomen; dit is alleen de herbruikbare huisstijl.
 |---|---|
 | `tokens/` | Design tokens als CSS-variabelen: `colors.css`, `typography.css`, `spacing.css`, `fonts.css` |
 | `styles.css` | Verzamelbestand dat de vier token-bestanden importeert (het hoofd-exportpunt van het pakket) |
-| `voorbeeld/` | Minimaal HTML-voorbeeld dat de tokens laadt en de kernstijlen toont |
-| `scripts/` | `check-tokens.mjs`: valideert de tokens tegen `bron/handboek-tekst.md` (`npm test`) |
+| `voorbeeld/` | Minimaal HTML-voorbeeld dat de tokens én de componenten laadt en toont |
+| `scripts/` | `check-tokens.mjs` (tokens ↔ handboek) en `check-components.mjs` (componenten ↔ tokens, tarball) — samen `npm test` |
 | `guidelines/` | 13 merkstijl-kaarten (HTML): kleuren, typografie, spacing, logo-regels, beeldmerk, pay-off, fotografie |
-| `components/core/` | `Button` en `DataTable` (React), elk met typedefinitie en gebruiksvoorbeeld (`*.prompt.md`) |
+| `components/core/` | `Button` en `DataTable` (React) als `.js`/`.d.ts`/`components.css`, plus de oorspronkelijke `*.prompt.md`-gebruiksvoorbeelden |
 | `assets/logo/` | Basislogo in alle vormen — vector (`.eps`, `.svg`, `.pdf`), druk-JPG (300 dpi) en transparante PNG's in drie maten — plus beeldmerk en mailvariant. Bron: SharePoint `VICkernteam › VIC Huisstijl › Logo's › VIC logo's` |
 
-In het npm-pakket zitten `styles.css` en `tokens/`, plus `scripts/check-tokens.mjs`
-en `bron/handboek-tekst.md` zodat `npm test` ook in het geïnstalleerde pakket draait
-(zie `files` in `package.json`); de rest is repo-materiaal.
+In het npm-pakket zitten `styles.css`, `tokens/` en `components/core/` (alleen de
+`.js`/`.d.ts`/`components.css`-bestanden, niet de `.prompt.md`'s), plus
+`scripts/check-tokens.mjs`, `scripts/check-components.mjs` en `bron/handboek-tekst.md`
+zodat `npm test` ook in het geïnstalleerde pakket draait (zie `files` in
+`package.json`); de rest is repo-materiaal.
 
 ## Wat er (nog) niet in zit — bewust
 
@@ -142,6 +209,7 @@ en `bron/handboek-tekst.md` zodat `npm test` ook in het geïnstalleerde pakket d
 
 ## Status
 
-Sinds issue #6 is dit een **installeerbaar pakket** (`0.1.0`, via git-URL). De tokens
-zijn gevalideerd tegen het bronhandboek (`npm test`). Issue #7 voegt de resterende
-onderdelen toe; issue #8 regelt registry-publicatie.
+Sinds issue #6 is dit een **installeerbaar pakket** (via git-URL). Issue #7 (`0.2.0`)
+voegt `Button` en `DataTable` toe als consumeerbare componenten, met React als
+`peerDependency`. Tokens én componenten zijn gevalideerd (`npm test`); issue #8
+regelt registry-publicatie.
