@@ -1,0 +1,67 @@
+/* ============================================================
+   VIC kerncomponenten — Button en DataTable
+   Uitsluitend tokens uit tokens/colors.css, tokens/typography.css
+   en tokens/spacing.css; geen hardcoded kleuren (behalve wit).
+   ============================================================ */
+
+/* --- Button --- */
+.vic-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.2;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out;
+}
+
+.vic-btn--sm { padding: 8px 16px; font-size: 14px; }
+.vic-btn--md { padding: 11px 22px; font-size: 15px; }
+.vic-btn--lg { padding: 14px 28px; font-size: 17px; }
+
+.vic-btn--primary { background: var(--button-primary); color: var(--text-inverse); }
+.vic-btn--primary:hover { background: var(--button-primary-hover); }
+
+.vic-btn--secondary { background: var(--button-secondary); color: var(--text-inverse); }
+.vic-btn--secondary:hover { background: var(--button-secondary-hover); }
+
+.vic-btn--outline { background: transparent; color: var(--vic-green); border-color: var(--vic-green); }
+.vic-btn--outline:hover { background: var(--vic-green); color: var(--text-inverse); }
+
+.vic-btn--link { background: transparent; color: var(--link); padding: 0; border: none; border-radius: 0; }
+.vic-btn--link:hover { color: var(--link-hover); }
+
+.vic-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+.vic-btn__arrow { font-weight: 400; }
+
+/* --- DataTable --- */
+.vic-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.vic-table th {
+  background: var(--vic-green);
+  color: var(--text-inverse);
+  text-align: left;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+}
+.vic-table th:last-child { border-right: none; }
+
+.vic-table tbody tr:nth-child(odd) { background: var(--vic-white); }
+.vic-table tbody tr:nth-child(even) { background: var(--vic-green-pale); }
+
+.vic-table td {
+  color: var(--text-body-blue);
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--vic-border);
+}

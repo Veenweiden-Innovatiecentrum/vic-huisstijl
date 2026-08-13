@@ -1,3 +1,5 @@
+import type { ReactNode, CSSProperties } from 'react';
+
 /**
  * VIC knop — groen primair, blauw secundair, outline of tekstlink met pijl.
  */
@@ -8,8 +10,12 @@ export interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   /** Wanneer gezet rendert de knop als <a>. */
   href?: string;
-  children?: React.ReactNode;
-  style?: React.CSSProperties;
+  children?: ReactNode;
+  /** Extra class(es), toegevoegd naast (niet in plaats van) de vic-btn-klassen. */
+  className?: string;
+  style?: CSSProperties;
   onClick?: () => void;
   disabled?: boolean;
 }
+
+export declare function Button(props: ButtonProps): JSX.Element;

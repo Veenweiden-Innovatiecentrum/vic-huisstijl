@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VIC-tokens — minimaal voorbeeld</title>
   <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../components/core/components.css">
   <style>
     /* Alleen demo-layout; alle merkwaarden komen uit de tokens. */
     body { margin: 0; background: var(--surface-page); }
@@ -56,6 +57,81 @@
     <section class="dark">
       <h2 class="vic-h2">Wit op donkerblauw</h2>
     </section>
+
+    <section class="card">
+      <h2 class="vic-h2 vic-blue-heading">Componenten</h2>
+      <p class="vic-body">
+        Gerenderd door de echte <code>Button</code> en <code>DataTable</code> uit
+        <code>@veenweiden-innovatiecentrum/vic-huisstijl/components</code> — geen losse demo-CSS.
+      </p>
+      <div id="components-demo">
+        <p class="vic-body" id="components-demo-fallback" hidden>
+          Dit gedeelte gebruikt ES modules en laadt niet via <code>file://</code> (dubbelklikken op dit
+          bestand) — browsers blokkeren lokale module-imports vanwege CORS. Start in deze map een lokale
+          server, bijvoorbeeld <code>npx serve .</code> of <code>python3 -m http.server</code>, en open de
+          pagina daarna via <code>http://localhost:…/voorbeeld/</code>.
+        </p>
+      </div>
+    </section>
   </main>
+
+  <script>
+    if (location.protocol === 'file:') {
+      document.getElementById('components-demo-fallback').hidden = false;
+    }
+  </script>
+
+  <!--
+    React/ReactDOM als klassieke UMD-scripts (géén bundler nodig, net als core.card.html
+    in components/core/). De twee kleine bestanden in vendor/ zijn alleen een ESM-schil
+    zodat components/core/*.js — dat écht `import React from 'react'` gebruikt — iets
+    importeerbaars heeft; er wordt niets herbouwd of getranspileerd. Dit blok laadt niet
+    via file:// (zie de fallback-tekst hierboven) — serveer deze map lokaal over HTTP.
+  -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "./vendor/react-shim.js",
+        "react-dom/client": "./vendor/react-dom-client-shim.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import { Button, DataTable } from '../components/core/index.js';
+
+    const demo = React.createElement(
+      'div',
+      { style: { display: 'grid', gap: 'var(--space-4)' } },
+      React.createElement(
+        'div',
+        { style: { display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' } },
+        React.createElement(Button, { variant: 'primary' }, 'Neem contact op'),
+        React.createElement(Button, { variant: 'secondary' }, 'Lees meer over KIEM'),
+        React.createElement(Button, { variant: 'outline' }, 'Maak kennis met het VIC'),
+        React.createElement(Button, { variant: 'link', href: '#' }, 'Zie onze activiteiten')
+      ),
+      React.createElement(
+        'div',
+        { style: { display: 'flex', gap: 'var(--space-3)', alignItems: 'center' } },
+        React.createElement(Button, { variant: 'primary', size: 'sm' }, 'Klein'),
+        React.createElement(Button, { variant: 'primary', size: 'md' }, 'Middel'),
+        React.createElement(Button, { variant: 'primary', size: 'lg' }, 'Groot')
+      ),
+      React.createElement(DataTable, {
+        columns: ['Invalshoek', 'Activiteit', 'Status'],
+        rows: [
+          ['Water', 'Klimaatslootjes', 'Lopend'],
+          ['Bodem', 'Greppelinfiltratie', 'Afgerond'],
+          ['Plant', 'Natte teelten — lisdodde', 'Lopend'],
+        ],
+      })
+    );
+
+    createRoot(document.getElementById('components-demo')).render(demo);
+  </script>
 </body>
 </html>
