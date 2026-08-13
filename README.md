@@ -37,9 +37,20 @@ import '@veenweiden-innovatiecentrum/vic-huisstijl';
 
 Zonder bundler werkt een gewone `<link rel="stylesheet">` naar `styles.css` in
 `node_modules` ook. Een werkend minimaal voorbeeld staat in
-[`voorbeeld/index.html`](voorbeeld/index.html); open het lokaal in een browser.
-`npm test` draait de validatie van de tokens tegen het bronhandboek
-(`scripts/check-tokens.mjs`, kale Node, geen dependencies).
+[`voorbeeld/index.html`](voorbeeld/index.html). De tokens/typografie-secties werken
+ook met dubbelklikken (`file://`), maar de "Componenten"-sectie gebruikt ES modules
+en heeft daarom een lokale server nodig — vanuit de repo-root bijvoorbeeld:
+
+```sh
+npx serve .
+# of: python3 -m http.server
+```
+
+en open dan `http://localhost:…/voorbeeld/`. Via `file://` toont die sectie een
+duidelijke melding in plaats van een lege demo. `npm test` draait de validatie van
+de tokens tegen het bronhandboek en van de componenten tegen de tokens
+(`scripts/check-tokens.mjs` + `scripts/check-components.mjs`, kale Node, geen
+dependencies).
 
 ## Welke CSS-variabelen er zijn
 
@@ -134,6 +145,7 @@ die gesynchroniseerd moet blijven met de tokens, en de props-API blijft ongewijz
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Grootte |
 | `href` | `string` | — | Rendert `<a>` in plaats van `<button>` |
 | `children` | `ReactNode` | — | Inhoud van de knop |
+| `className` | `string` | — | Extra class(es), toegevoegd náást de `vic-btn`-klassen (niet in plaats ervan) |
 | `style` | `CSSProperties` | — | Extra inline stijl |
 | `onClick` | `() => void` | — | Klik-handler |
 | `disabled` | `boolean` | — | Uitgeschakeld |
@@ -147,6 +159,7 @@ Varianten: `primary` (groen), `secondary` (donkerblauw), `outline` (groene rand)
 |---|---|---|---|
 | `columns` | `ReactNode[]` | — | Kolomkoppen |
 | `rows` | `ReactNode[][]` | — | Rijen als arrays van celinhoud |
+| `className` | `string` | — | Extra class(es), toegevoegd náást de `vic-table`-klasse (niet in plaats ervan) |
 | `style` | `CSSProperties` | — | Extra inline stijl |
 
 Groene headerbalk, om-en-om witte/zachtgroene rijen, donkerblauwe celtekst — naar

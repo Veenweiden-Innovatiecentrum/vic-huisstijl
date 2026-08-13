@@ -72,13 +72,30 @@ const indexJs = files['components/core/index.js'];
 ok('index.js exporteert Button', /export\s*\{\s*Button\s*\}/.test(indexJs));
 ok('index.js exporteert DataTable', /export\s*\{\s*DataTable\s*\}/.test(indexJs));
 
-// 5. package.json: components-export, peerDependency, versie
-console.log('\n== package.json: components-export en peerDependency ==');
+// 4b. className: consumer mag eigen classes toevoegen zonder de vic-klassen te wissen
+// (regressie: ...rest ná className gespreid overschrijft className stilletjes — zie PR #7-review)
+console.log('\n== className: consumer-className clobbert de VIC-klassen niet ==');
+const buttonParams = buttonJs.match(/export function Button\(\{([^}]*)\}\)/s)?.[1] ?? '';
+ok('Button.js heeft className als eigen (niet-rest) prop', /\bclassName\b/.test(buttonParams));
+ok('Button.js spreidt ...rest ná className (className kan niet via rest clobberen)',
+   /\bclassName\b[\s\S]*\.\.\.rest/.test(buttonParams));
+ok('Button.js merget className in de class-string (filter(Boolean).join)',
+   /className\s*\]\s*\.filter\(Boolean\)\.join\(' '\)/.test(buttonJs));
+
+const dataTableParams = dataTableJs.match(/export function DataTable\(\{([^}]*)\}\)/s)?.[1] ?? '';
+ok('DataTable.js heeft className als eigen prop', /\bclassName\b/.test(dataTableParams));
+ok('DataTable.js merget className in de class-string (filter(Boolean).join)',
+   /className\s*\]\s*\.filter\(Boolean\)\.join\(' '\)/.test(dataTableJs));
+
+// 5. package.json: components-export, peerDependency, ESM, versie
+console.log('\n== package.json: components-export, peerDependency, ESM ==');
 const pkg = JSON.parse(read('package.json'));
 ok('exports bevat "./components"', !!pkg.exports?.['./components']);
 ok('exports bevat "./components/components.css"', !!pkg.exports?.['./components/components.css']);
 ok('peerDependencies.react is ">=18"', /^>=\s*18/.test(pkg.peerDependencies?.react ?? ''));
 ok('react staat niet als (dev)dependency', !pkg.dependencies?.react && !pkg.devDependencies?.react);
+ok('"type": "module" staat op pakketniveau (anders CJS-parsefout op Node 18/20 bij import/export)',
+   pkg.type === 'module');
 ok('versie is 0.2.0', pkg.version === '0.2.0');
 
 // 6. Tarball: componentbestanden zitten daadwerkelijk in npm pack

@@ -8,6 +8,7 @@
     "url": "git+https://github.com/Veenweiden-Innovatiecentrum/vic-huisstijl.git"
   },
   "homepage": "https://github.com/Veenweiden-Innovatiecentrum/vic-huisstijl#readme",
+  "type": "module",
   "style": "styles.css",
   "exports": {
     ".": "./styles.css",

@@ -11,6 +11,8 @@ export interface ButtonProps {
   /** Wanneer gezet rendert de knop als <a>. */
   href?: string;
   children?: ReactNode;
+  /** Extra class(es), toegevoegd naast (niet in plaats van) de vic-btn-klassen. */
+  className?: string;
   style?: CSSProperties;
   onClick?: () => void;
   disabled?: boolean;

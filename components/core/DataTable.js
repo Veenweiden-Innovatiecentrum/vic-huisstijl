@@ -5,10 +5,10 @@ import React from 'react';
  * witte en zachtgroene rijen, donkerblauwe celtekst.
  * Styling komt uit components.css (tokens).
  */
-export function DataTable({ columns = [], rows = [], style }) {
+export function DataTable({ columns = [], rows = [], className, style }) {
   return React.createElement(
     'table',
-    { className: 'vic-table', style },
+    { className: ['vic-table', className].filter(Boolean).join(' '), style },
     React.createElement(
       'thead',
       null,

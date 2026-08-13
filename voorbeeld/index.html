@@ -64,15 +64,29 @@
         Gerenderd door de echte <code>Button</code> en <code>DataTable</code> uit
         <code>@veenweiden-innovatiecentrum/vic-huisstijl/components</code> — geen losse demo-CSS.
       </p>
-      <div id="components-demo"></div>
+      <div id="components-demo">
+        <p class="vic-body" id="components-demo-fallback" hidden>
+          Dit gedeelte gebruikt ES modules en laadt niet via <code>file://</code> (dubbelklikken op dit
+          bestand) — browsers blokkeren lokale module-imports vanwege CORS. Start in deze map een lokale
+          server, bijvoorbeeld <code>npx serve .</code> of <code>python3 -m http.server</code>, en open de
+          pagina daarna via <code>http://localhost:…/voorbeeld/</code>.
+        </p>
+      </div>
     </section>
   </main>
+
+  <script>
+    if (location.protocol === 'file:') {
+      document.getElementById('components-demo-fallback').hidden = false;
+    }
+  </script>
 
   <!--
     React/ReactDOM als klassieke UMD-scripts (géén bundler nodig, net als core.card.html
     in components/core/). De twee kleine bestanden in vendor/ zijn alleen een ESM-schil
     zodat components/core/*.js — dat écht `import React from 'react'` gebruikt — iets
-    importeerbaars heeft; er wordt niets herbouwd of getranspileerd.
+    importeerbaars heeft; er wordt niets herbouwd of getranspileerd. Dit blok laadt niet
+    via file:// (zie de fallback-tekst hierboven) — serveer deze map lokaal over HTTP.
   -->
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
