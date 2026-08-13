@@ -20,7 +20,9 @@
   },
   "files": [
     "styles.css",
-    "tokens/"
+    "tokens/",
+    "scripts/check-tokens.mjs",
+    "bron/handboek-tekst.md"
   ],
   "sideEffects": [
     "**/*.css"

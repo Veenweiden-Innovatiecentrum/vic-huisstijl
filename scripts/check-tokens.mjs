@@ -53,11 +53,13 @@ console.log('\n== Typografie: regels uit het handboek ==');
 const block = (sel) => typographyCss.match(new RegExp(`${sel.replace('.', '\\.')}\\s*{[^}]*}`, 's'))?.[0] ?? '';
 const h1 = block('.vic-h1'), h2 = block('.vic-h2'), h3 = block('.vic-h3'), body = block('.vic-body');
 
+ok('klassen .vic-h1/.vic-h2/.vic-h3/.vic-body bestaan',
+   [h1, h2, h3, body].every((b) => b.length > 0));
 ok('H1 in HOOFDLETTERS', /text-transform:\s*uppercase/.test(h1));
 ok('H1 groen (of blauw via --text-heading/-alt)', /var\(--text-heading\)/.test(h1));
 ok('H2 in HOOFDLETTERS', /text-transform:\s*uppercase/.test(h2));
 ok('H2 groen (of blauw via --text-heading/-alt)', /var\(--text-heading\)/.test(h2));
-ok('H3 zinskast (géén uppercase)', !/text-transform:\s*uppercase/.test(h3));
+ok('H3 zinskast (géén uppercase)', h3.length > 0 && !/text-transform:\s*uppercase/.test(h3));
 ok('platte tekst via --text-body (zwart), blauw-variant beschikbaar',
    /var\(--text-body\)/.test(body) && /\.vic-body-blue\s*{\s*color:\s*var\(--text-body-blue\)/.test(typographyCss));
 ok('platte tekst zwart óf donkerblauw als alias',
@@ -74,8 +76,9 @@ ok("--font-office = Carlito/Calibri", /--font-office:\s*'Carlito',\s*'Calibri'/.
 console.log('\n== Stijl: vlak en rechtlijnig ==');
 const spacingCss = read('tokens/spacing.css');
 ok('radius-none aanwezig, kleine radii (sm ≤ 4px)', /--radius-none:\s*0px/.test(spacingCss) && /--radius-sm:\s*4px/.test(spacingCss));
+const alphas = [...spacingCss.matchAll(/rgba\([^)]*,\s*(0\.\d+)\)/g)];
 ok('schaduwen terughoudend (alpha ≤ 0.16)',
-   [...spacingCss.matchAll(/rgba\([^)]*,\s*(0\.\d+)\)/g)].every((m) => Number(m[1]) <= 0.16));
+   alphas.length > 0 && alphas.every((m) => Number(m[1]) <= 0.16));
 
 console.log(`\n${failures === 0 ? 'ALLE CHECKS GESLAAGD' : `${failures} CHECK(S) GEFAALD`}`);
 process.exit(failures === 0 ? 0 : 1);

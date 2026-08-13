@@ -122,8 +122,9 @@ niet meegekomen; dit is alleen de herbruikbare huisstijl.
 | `components/core/` | `Button` en `DataTable` (React), elk met typedefinitie en gebruiksvoorbeeld (`*.prompt.md`) |
 | `assets/logo/` | Basislogo in alle vormen — vector (`.eps`, `.svg`, `.pdf`), druk-JPG (300 dpi) en transparante PNG's in drie maten — plus beeldmerk en mailvariant. Bron: SharePoint `VICkernteam › VIC Huisstijl › Logo's › VIC logo's` |
 
-In het npm-pakket zelf zitten alleen `styles.css` en `tokens/` (zie `files` in
-`package.json`); de rest is repo-materiaal.
+In het npm-pakket zitten `styles.css` en `tokens/`, plus `scripts/check-tokens.mjs`
+en `bron/handboek-tekst.md` zodat `npm test` ook in het geïnstalleerde pakket draait
+(zie `files` in `package.json`); de rest is repo-materiaal.
 
 ## Wat er (nog) niet in zit — bewust
 
