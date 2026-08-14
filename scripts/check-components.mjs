@@ -96,7 +96,8 @@ ok('peerDependencies.react is ">=18"', /^>=\s*18/.test(pkg.peerDependencies?.rea
 ok('react staat niet als (dev)dependency', !pkg.dependencies?.react && !pkg.devDependencies?.react);
 ok('"type": "module" staat op pakketniveau (anders CJS-parsefout op Node 18/20 bij import/export)',
    pkg.type === 'module');
-ok('versie is 0.2.0', pkg.version === '0.2.0');
+// Geen hard-gecodeerde versie: dat brak de releaseprocedure bij elke bump (Codex, PR #5).
+ok('versie is geldige semver (X.Y.Z)', /^\d+\.\d+\.\d+$/.test(pkg.version ?? ''));
 
 // 6. Tarball: componentbestanden zitten daadwerkelijk in npm pack
 console.log('\n== Tarball: componentbestanden zitten in npm pack --dry-run ==');
