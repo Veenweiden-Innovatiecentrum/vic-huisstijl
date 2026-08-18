@@ -1,7 +1,7 @@
 {
   "name": "@veenweiden-innovatiecentrum/vic-huisstijl",
-  "version": "0.2.0",
-  "description": "VIC-huisstijl als design tokens (CSS-variabelen) en kerncomponenten (React): kleuren, typografie, spacing en fonts uit het VIC huisstijl 2024-handboek, plus Button en DataTable.",
+  "version": "0.3.0",
+  "description": "VIC-huisstijl als design tokens (CSS-variabelen) en kerncomponenten (React): kleuren, typografie, spacing en fonts uit het VIC huisstijl 2024-handboek, plus Button, DataTable en PlatformBalk.",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
@@ -29,9 +29,11 @@
     "tokens/",
     "components/core/Button.js",
     "components/core/DataTable.js",
+    "components/core/PlatformBalk.js",
     "components/core/index.js",
     "components/core/Button.d.ts",
     "components/core/DataTable.d.ts",
+    "components/core/PlatformBalk.d.ts",
     "components/core/index.d.ts",
     "components/core/components.css",
     "scripts/check-tokens.mjs",

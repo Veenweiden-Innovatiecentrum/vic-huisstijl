@@ -104,11 +104,12 @@ keuze voor kantoortoepassingen (Office).
 
 ## Componenten
 
-Sinds `0.2.0` zit de kerncomponentbibliotheek (`Button`, `DataTable`) in het pakket,
-onder een eigen export zodat je ze los van de tokens kunt importeren:
+Sinds `0.2.0` zit de kerncomponentbibliotheek (`Button`, `DataTable`, sinds `0.3.0`
+ook `PlatformBalk`) in het pakket, onder een eigen export zodat je ze los van de
+tokens kunt importeren:
 
 ```js
-import { Button, DataTable } from '@veenweiden-innovatiecentrum/vic-huisstijl/components';
+import { Button, DataTable, PlatformBalk } from '@veenweiden-innovatiecentrum/vic-huisstijl/components';
 import '@veenweiden-innovatiecentrum/vic-huisstijl/components/components.css';
 import '@veenweiden-innovatiecentrum/vic-huisstijl'; // tokens — components.css leunt erop
 ```
@@ -168,6 +169,39 @@ het VIC PPT-sjabloon.
 Een werkend voorbeeld met beide componenten (echt gerenderd, niet nagebouwd in CSS)
 staat in [`voorbeeld/index.html`](voorbeeld/index.html), sectie "Componenten".
 
+**`PlatformBalk`** (props uit `components/core/PlatformBalk.d.ts`) — de gedeelde
+bovenbalk voor hub, gids en VIA | Collect (vic-platform#61): VIC-beeldmerk +
+optionele appnaam links (appnaam valt als eerste weg op een smal scherm; logo en
+accountrondje blijven altijd staan), een `children`-slot in het midden voor
+app-eigen knoppen, en uiterst rechts een rondje met initialen dat uitklapt naar
+naam/e-mailadres, optionele menu-extra's en uitloggen:
+
+| Prop | Type | Default | Omschrijving |
+|---|---|---|---|
+| `appNaam` | `string` | — | Naast het beeldmerk (bv. "Innovatieveld"). Valt als eerste weg op een smal scherm |
+| `naam` | `string` | — | Naam van de ingelogde gebruiker, boven in het accountmenu |
+| `email` | `string` | — | E-mailadres, onder de naam in het accountmenu |
+| `uitlogUrl` | `string` | — | Gebruikt als er geen `onUitloggen` is opgegeven — rendert "Uitloggen" als `<a href>` |
+| `onUitloggen` | `() => void` | — | Heeft voorrang op `uitlogUrl` — rendert "Uitloggen" dan als `<button>` (bv. voor een eigen uitlogstap vóór de navigatie) |
+| `menuExtras` | `{ label, href?, onClick? }[]` | `[]` | App-eigen items tussen naam/e-mailadres en "Uitloggen" (bv. "Beheer", "Wachtwoord wijzigen") |
+| `hubUrl` | `string` | `'https://veenweiden.online'` | Logo-klik gaat hier altijd naartoe |
+| `children` | `ReactNode` | — | App-eigen knoppen in het midden van de balk |
+| `className` | `string` | — | Extra class(es), toegevoegd náást de `vic-platformbalk`-klassen |
+| `style` | `CSSProperties` | — | Extra inline stijl |
+
+Het VIC-beeldmerk zit als data-URI in het component zelf (geen los `/vic-logo.png`
+per app meer nodig — dat was precies het verschil tussen de apps dat dit component
+oplost). Plain React, geen framework-specifieke imports: hooks komen van de
+`React`-namespace (`React.useState` e.d.), niet als named import — dat werkt ook in
+omgevingen die React alleen als default export doorgeven (zoals het kale
+UMD-voorbeeld hieronder). Toegankelijk: `aria-haspopup`/`aria-expanded` op de
+accountknop, Escape sluit het menu (focus terug naar de knop), een klik buiten het
+menu sluit het, zichtbare focus (`:focus-visible`) op zowel de accountknop als de
+menu-items, en alles is met het toetsenbord te bedienen. Drie gebruiksvoorbeelden
+(hub zonder appknoppen, gids met taalknop, VIA | Collect met navigatie) staan in
+`components/core/PlatformBalk.prompt.md` en, echt gerenderd, in
+[`voorbeeld/index.html`](voorbeeld/index.html), sectie "PlatformBalk".
+
 ## Wat je níet doet
 
 - **Kleuren mengen of verzinnen:** kies per uiting één primaire kleur (groen óf blauw),
@@ -197,7 +231,7 @@ niet meegekomen; dit is alleen de herbruikbare huisstijl.
 | `voorbeeld/` | Minimaal HTML-voorbeeld dat de tokens én de componenten laadt en toont |
 | `scripts/` | `check-tokens.mjs` (tokens ↔ handboek) en `check-components.mjs` (componenten ↔ tokens, tarball) — samen `npm test` |
 | `guidelines/` | 13 merkstijl-kaarten (HTML): kleuren, typografie, spacing, logo-regels, beeldmerk, pay-off, fotografie |
-| `components/core/` | `Button` en `DataTable` (React) als `.js`/`.d.ts`/`components.css`, plus de oorspronkelijke `*.prompt.md`-gebruiksvoorbeelden |
+| `components/core/` | `Button`, `DataTable` en `PlatformBalk` (React) als `.js`/`.d.ts`/`components.css`, plus de oorspronkelijke `*.prompt.md`-gebruiksvoorbeelden |
 | `assets/logo/` | Basislogo in alle vormen — vector (`.eps`, `.svg`, `.pdf`), druk-JPG (300 dpi) en transparante PNG's in drie maten — plus beeldmerk en mailvariant. Bron: SharePoint `VICkernteam › VIC Huisstijl › Logo's › VIC logo's` |
 
 In het npm-pakket zitten `styles.css`, `tokens/` en `components/core/` (alleen de
@@ -238,6 +272,11 @@ gelden ook hier:
   handboek — of het handboek wordt eerst bewust aangepast, nooit stilzwijgend.
 
 ## Status
+
+`v0.3.0` (18-08-2026): `PlatformBalk` — de gedeelde bovenbalk voor hub, gids en
+VIA | Collect (vic-platform#61, stap 1 van 3: het component hier; hub/gids en
+VIA | Collect zetten hun eigen topbalk in vervolg-PR's over op de gepinde nieuwe
+versie).
 
 `v0.2.0` (13-08-2026): tokens (#6) + componenten Button/DataTable (#7), gevalideerd en
 versioned importeerbaar via git-tag (#8). Registry-publicatie (npm/GitHub Packages) is
