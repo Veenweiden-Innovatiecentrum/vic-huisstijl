@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 // Hooks via de React-namespace (niet als named import): sommige omgevingen
@@ -129,17 +131,22 @@ export function PlatformBalk({
                 item.label
               )
             ),
-            React.createElement(
-              onUitloggen ? 'button' : 'a',
-              {
-                type: onUitloggen ? 'button' : undefined,
-                href: onUitloggen ? undefined : uitlogUrl,
-                role: 'menuitem',
-                className: 'vic-platformbalk__menu-item vic-platformbalk__menu-item--uit',
-                onClick: onUitloggen ? sluitEnDoe(onUitloggen) : () => setMenuOpen(false),
-              },
-              'Uitloggen'
-            )
+            // Alleen een uitlogitem als er ook echt iets gebeurt: zonder
+            // `onUitloggen` én zonder `uitlogUrl` zou dit een dode knop zijn
+            // die het menu sluit en de indruk wekt dat je bent uitgelogd.
+            onUitloggen || uitlogUrl
+              ? React.createElement(
+                  onUitloggen ? 'button' : 'a',
+                  {
+                    type: onUitloggen ? 'button' : undefined,
+                    href: onUitloggen ? undefined : uitlogUrl,
+                    role: 'menuitem',
+                    className: 'vic-platformbalk__menu-item vic-platformbalk__menu-item--uit',
+                    onClick: onUitloggen ? sluitEnDoe(onUitloggen) : () => setMenuOpen(false),
+                  },
+                  'Uitloggen'
+                )
+              : null
           )
         : null
     )
