@@ -19,6 +19,7 @@ const ok = (label, pass, detail = '') => {
 const files = {
   'components/core/Button.js': read('components/core/Button.js'),
   'components/core/DataTable.js': read('components/core/DataTable.js'),
+  'components/core/PlatformBalk.js': read('components/core/PlatformBalk.js'),
   'components/core/index.js': read('components/core/index.js'),
   'components/core/components.css': read('components/core/components.css'),
 };
@@ -66,11 +67,31 @@ ok('DataTable.js rendert thead en tbody', /thead/.test(dataTableJs) && /tbody/.t
 ok('zebra-rijen (odd/even) gestyled in components.css',
    /nth-child\(odd\)/.test(componentsCss) && /nth-child\(even\)/.test(componentsCss));
 
+// 3b. PlatformBalk: toegankelijkheid en href/onClick-keuze (vic-platform#61)
+console.log('\n== PlatformBalk: toegankelijkheid en gedrag ==');
+const platformBalkJs = files['components/core/PlatformBalk.js'];
+const platformBalkCss = componentsCss;
+ok('avatarknop heeft aria-haspopup="menu"', /'aria-haspopup':\s*'menu'/.test(platformBalkJs));
+ok('avatarknop heeft aria-expanded gekoppeld aan state', /'aria-expanded':\s*menuOpen/.test(platformBalkJs));
+ok('Escape sluit het menu', /e\.key === 'Escape'/.test(platformBalkJs));
+ok('klik buiten het menu sluit het (mousedown + contains-check)',
+   /addEventListener\('mousedown'/.test(platformBalkJs) && /\.contains\(/.test(platformBalkJs));
+ok('focus gaat terug naar de avatarknop na Escape', /avatarKnopRef\.current\?\.focus\(\)/.test(platformBalkJs));
+ok('menu-items hebben role="menuitem"', /role:\s*'menuitem'/.test(platformBalkJs));
+ok('"Uitloggen" kiest href óf onClick net als Button (href/onClick-keuze)',
+   /onUitloggen \? 'button' : 'a'/.test(platformBalkJs));
+ok('focus-visible zichtbaar op avatarknop en menu-items in components.css',
+   /\.vic-platformbalk__avatar:focus-visible/.test(platformBalkCss) &&
+   /\.vic-platformbalk__menu-item:focus-visible/.test(platformBalkCss));
+ok('appnaam valt weg op smal scherm (media query)',
+   /@media[^{]*\{\s*\.vic-platformbalk__appnaam\s*\{\s*display:\s*none/.test(platformBalkCss));
+
 // 4. Barrel-export
 console.log('\n== index.js: barrel-export ==');
 const indexJs = files['components/core/index.js'];
 ok('index.js exporteert Button', /export\s*\{\s*Button\s*\}/.test(indexJs));
 ok('index.js exporteert DataTable', /export\s*\{\s*DataTable\s*\}/.test(indexJs));
+ok('index.js exporteert PlatformBalk', /export\s*\{\s*PlatformBalk\s*\}/.test(indexJs));
 
 // 4b. className: consumer mag eigen classes toevoegen zonder de vic-klassen te wissen
 // (regressie: ...rest ná className gespreid overschrijft className stilletjes — zie PR #7-review)
@@ -86,6 +107,11 @@ const dataTableParams = dataTableJs.match(/export function DataTable\(\{([^}]*)\
 ok('DataTable.js heeft className als eigen prop', /\bclassName\b/.test(dataTableParams));
 ok('DataTable.js merget className in de class-string (filter(Boolean).join)',
    /className\s*\]\s*\.filter\(Boolean\)\.join\(' '\)/.test(dataTableJs));
+
+const platformBalkParams = platformBalkJs.match(/export function PlatformBalk\(\{([^}]*)\}\)/s)?.[1] ?? '';
+ok('PlatformBalk.js heeft className als eigen prop', /\bclassName\b/.test(platformBalkParams));
+ok('PlatformBalk.js merget className in de class-string (filter(Boolean).join)',
+   /className\s*\]\s*\.filter\(Boolean\)\.join\(' '\)/.test(platformBalkJs));
 
 // 5. package.json: components-export, peerDependency, ESM, versie
 console.log('\n== package.json: components-export, peerDependency, ESM ==');
@@ -123,9 +149,11 @@ if (packRan) {
     const expected = [
       'components/core/Button.js',
       'components/core/DataTable.js',
+      'components/core/PlatformBalk.js',
       'components/core/index.js',
       'components/core/Button.d.ts',
       'components/core/DataTable.d.ts',
+      'components/core/PlatformBalk.d.ts',
       'components/core/index.d.ts',
       'components/core/components.css',
       'scripts/check-components.mjs',

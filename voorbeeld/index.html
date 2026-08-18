@@ -73,6 +73,16 @@
         </p>
       </div>
     </section>
+
+    <section class="card" style="padding: 0;">
+      <h2 class="vic-h2 vic-blue-heading" style="padding: var(--space-5) var(--space-5) 0;">PlatformBalk</h2>
+      <p class="vic-body" style="padding: 0 var(--space-5);">
+        Drie apps, dezelfde balk — alleen het middenstuk verschilt (vic-platform#61).
+      </p>
+      <div id="platformbalk-demo-hub" style="margin-top: var(--space-4);"></div>
+      <div id="platformbalk-demo-gids" style="margin-top: var(--space-2);"></div>
+      <div id="platformbalk-demo-via" style="margin-top: var(--space-2); margin-bottom: var(--space-2);"></div>
+    </section>
   </main>
 
   <script>
@@ -101,7 +111,7 @@
   <script type="module">
     import React from 'react';
     import { createRoot } from 'react-dom/client';
-    import { Button, DataTable } from '../components/core/index.js';
+    import { Button, DataTable, PlatformBalk } from '../components/core/index.js';
 
     const demo = React.createElement(
       'div',
@@ -132,6 +142,41 @@
     );
 
     createRoot(document.getElementById('components-demo')).render(demo);
+
+    // Drie apps, dezelfde balk (vic-platform#61) — alleen het middenstuk verschilt.
+    createRoot(document.getElementById('platformbalk-demo-hub')).render(
+      React.createElement(PlatformBalk, { naam: 'Tim Selders', email: 'tim@veenweiden.nl' })
+    );
+    createRoot(document.getElementById('platformbalk-demo-gids')).render(
+      React.createElement(
+        PlatformBalk,
+        {
+          appNaam: 'Innovatieveld',
+          naam: 'Pauline Boers',
+          email: 'pauline@veenweiden.nl',
+          menuExtras: [{ label: 'Beheer', href: '#beheer' }],
+        },
+        React.createElement(
+          'div',
+          { style: { display: 'inline-flex', border: '1px solid var(--vic-border)', borderRadius: 'var(--radius-pill)', overflow: 'hidden' } },
+          React.createElement('button', { type: 'button', style: { border: 'none', background: 'var(--vic-blue)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, padding: '4px 9px', cursor: 'pointer' } }, 'NL'),
+          React.createElement('button', { type: 'button', style: { border: 'none', background: 'transparent', color: 'var(--vic-blue)', fontSize: 'var(--text-xs)', fontWeight: 700, padding: '4px 9px', cursor: 'pointer' } }, 'EN')
+        )
+      )
+    );
+    createRoot(document.getElementById('platformbalk-demo-via')).render(
+      React.createElement(
+        PlatformBalk,
+        {
+          appNaam: 'VIA | Collect',
+          naam: 'Kirina de Vries',
+          email: 'kirina@veenweiden.nl',
+          menuExtras: [{ label: 'Wachtwoord wijzigen', onClick: () => window.alert('Wachtwoord wijzigen') }],
+        },
+        React.createElement(Button, { variant: 'outline', size: 'sm' }, 'VIA | collect'),
+        React.createElement(Button, { variant: 'link', href: '#', size: 'sm' }, 'Handleiding')
+      )
+    );
   </script>
 </body>
 </html>
