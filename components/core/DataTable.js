@@ -4,8 +4,14 @@ import React from 'react';
  * Tabel in VIC-stijl (naar het PPT-sjabloon): groene headerbalk,
  * witte en zachtgroene rijen, donkerblauwe celtekst.
  * Styling komt uit components.css (tokens).
+ *
+ * Rijen zijn optioneel klikbaar via onRowClick — dan wordt de rij ook met
+ * Enter/spatie bedienbaar (role="button", tabIndex) en krijgt hij zichtbare
+ * focus. Zonder onRowClick blijft een rij een gewone <tr> (backwards compatibel).
  */
-export function DataTable({ columns = [], rows = [], className, style }) {
+export function DataTable({ columns = [], rows = [], onRowClick, rowKey, rowClassName, className, style }) {
+  const clickable = typeof onRowClick === 'function';
+
   return React.createElement(
     'table',
     { className: ['vic-table', className].filter(Boolean).join(' '), style },
@@ -21,13 +27,32 @@ export function DataTable({ columns = [], rows = [], className, style }) {
     React.createElement(
       'tbody',
       null,
-      rows.map((row, r) =>
-        React.createElement(
+      rows.map((row, r) => {
+        const key = rowKey ? rowKey(row, r) : r;
+        const extraClass = rowClassName ? rowClassName(row, r) : undefined;
+        const rowProps = {
+          key,
+          className: [clickable ? 'vic-table__row--clickable' : null, extraClass].filter(Boolean).join(' ') || undefined,
+        };
+
+        if (clickable) {
+          rowProps.tabIndex = 0;
+          rowProps.role = 'button';
+          rowProps.onClick = () => onRowClick(row, r);
+          rowProps.onKeyDown = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onRowClick(row, r);
+            }
+          };
+        }
+
+        return React.createElement(
           'tr',
-          { key: r },
+          rowProps,
           row.map((cell, c) => React.createElement('td', { key: c }, cell))
-        )
-      )
+        );
+      })
     )
   );
 }

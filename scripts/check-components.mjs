@@ -67,6 +67,30 @@ ok('DataTable.js rendert thead en tbody', /thead/.test(dataTableJs) && /tbody/.t
 ok('zebra-rijen (odd/even) gestyled in components.css',
    /nth-child\(odd\)/.test(componentsCss) && /nth-child\(even\)/.test(componentsCss));
 
+// 3a. DataTable: klikbare rijen zijn ook toetsenbord-bedienbaar (vic-platform#53)
+console.log('\n== DataTable: klikbare rijen — toetsenbord en zichtbare focus ==');
+const dataTableDts = read('components/core/DataTable.d.ts');
+ok('rij krijgt role="button" alleen als onRowClick is gezet',
+   /rowProps\.role = 'button'/.test(dataTableJs) && /if \(clickable\)/.test(dataTableJs));
+ok('rij krijgt tabIndex 0 alleen als onRowClick is gezet', /rowProps\.tabIndex = 0/.test(dataTableJs));
+ok('Enter activeert de rij', /e\.key === 'Enter'/.test(dataTableJs));
+ok('spatie activeert de rij (naast Enter, net als een echte knop)', /e\.key === ' '/.test(dataTableJs));
+ok('keydown-handler doet preventDefault (geen paginascroll bij spatie)',
+   /onKeyDown[\s\S]{0,120}preventDefault/.test(dataTableJs));
+ok('rij zonder onRowClick blijft een gewone <tr> (tabIndex/role alleen gezet binnen if (clickable))',
+   /const rowProps = \{\s*\n\s*key,\s*\n\s*className:/.test(dataTableJs) &&
+   /if \(clickable\) \{\s*\n\s*rowProps\.tabIndex = 0/.test(dataTableJs));
+ok('rowKey bepaalt de sleutel per rij (default: rij-index, zoals nu)',
+   /rowKey \? rowKey\(row, r\) : r/.test(dataTableJs));
+ok('rowClassName geeft optioneel een class per rij (voor markeringen)',
+   /rowClassName \? rowClassName\(row, r\) : undefined/.test(dataTableJs));
+ok('zichtbare focus (focus-visible) gestyled in components.css voor klikbare rijen',
+   /\.vic-table tbody tr\.vic-table__row--clickable:focus-visible/.test(componentsCss) &&
+   /box-shadow:\s*var\(--focus-ring\)/.test(componentsCss));
+ok('onRowClick gedocumenteerd in DataTable.d.ts', /onRowClick\?:/.test(dataTableDts));
+ok('rowKey gedocumenteerd in DataTable.d.ts', /rowKey\?:/.test(dataTableDts));
+ok('rowClassName gedocumenteerd in DataTable.d.ts', /rowClassName\?:/.test(dataTableDts));
+
 // 3b. PlatformBalk: toegankelijkheid en href/onClick-keuze (vic-platform#61)
 console.log('\n== PlatformBalk: toegankelijkheid en gedrag ==');
 const platformBalkJs = files['components/core/PlatformBalk.js'];

@@ -66,6 +66,15 @@
   border-bottom: 1px solid var(--vic-border);
 }
 
+.vic-table tbody tr.vic-table__row--clickable { cursor: pointer; }
+.vic-table tbody tr.vic-table__row--clickable:hover { background: var(--vic-green-soft); }
+.vic-table tbody tr.vic-table__row--clickable:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  position: relative;
+  z-index: 1;
+}
+
 /* --- PlatformBalk --- */
 .vic-platformbalk {
   display: flex;

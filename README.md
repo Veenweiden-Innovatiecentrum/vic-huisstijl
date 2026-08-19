@@ -159,12 +159,28 @@ Varianten: `primary` (groen), `secondary` (donkerblauw), `outline` (groene rand)
 | Prop | Type | Default | Omschrijving |
 |---|---|---|---|
 | `columns` | `ReactNode[]` | — | Kolomkoppen |
-| `rows` | `ReactNode[][]` | — | Rijen als arrays van celinhoud |
+| `rows` | `ReactNode[][]` | — | Rijen als arrays van celinhoud — een cel mag een willekeurige node zijn |
+| `onRowClick` | `(row, index) => void` | — | Maakt een rij klikbaar én toetsenbord-bedienbaar (Enter/spatie, `role="button"`, `tabIndex` 0) met zichtbare focus. Zonder `onRowClick` is een rij een gewone `<tr>` |
+| `rowKey` | `(row, index) => Key` | rij-index | Sleutel per rij |
+| `rowClassName` | `(row, index) => string \| undefined` | — | Optionele class per rij (bijv. voor markeringen), naast `vic-table__row--clickable` |
 | `className` | `string` | — | Extra class(es), toegevoegd náást de `vic-table`-klasse (niet in plaats ervan) |
 | `style` | `CSSProperties` | — | Extra inline stijl |
 
 Groene headerbalk, om-en-om witte/zachtgroene rijen, donkerblauwe celtekst — naar
 het VIC PPT-sjabloon.
+
+```jsx
+<DataTable
+  columns={['Invalshoek', 'Activiteit', 'Status']}
+  rows={rijen}
+  rowKey={(row) => row[0]}
+  rowClassName={(row) => (row[0] === gekozen ? 'rij-geselecteerd' : undefined)}
+  onRowClick={(row) => setGekozen(row[0])}
+/>
+```
+
+Bestaande code die alleen `columns`/`rows` gebruikt blijft ongewijzigd werken:
+zonder `onRowClick` blijft een rij een gewone, niet-klikbare `<tr>`.
 
 Een werkend voorbeeld met beide componenten (echt gerenderd, niet nagebouwd in CSS)
 staat in [`voorbeeld/index.html`](voorbeeld/index.html), sectie "Componenten".
@@ -272,6 +288,11 @@ gelden ook hier:
   handboek — of het handboek wordt eerst bewust aangepast, nooit stilzwijgend.
 
 ## Status
+
+`v0.4.0` (19-08-2026): `DataTable` ondersteunt klikbare rijen (`onRowClick`, met
+Enter/spatie en zichtbare focus), `rowKey` en `rowClassName` — nodig om de tabellen
+van VIA | Collect te vervangen (vic-platform#53, stap 1 van 3). Achterwaarts
+compatibel: bestaande `columns`/`rows`-gebruik blijft ongewijzigd werken.
 
 `v0.3.1` (18-08-2026): app-eigen knoppen in `PlatformBalk` staan rechts, tegen het
 accountrondje aan (Tims wens). `v0.3.0` (18-08-2026): `PlatformBalk` — de gedeelde bovenbalk voor hub, gids en
