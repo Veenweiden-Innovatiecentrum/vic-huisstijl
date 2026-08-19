@@ -160,7 +160,7 @@ Varianten: `primary` (groen), `secondary` (donkerblauw), `outline` (groene rand)
 |---|---|---|---|
 | `columns` | `ReactNode[]` | — | Kolomkoppen |
 | `rows` | `ReactNode[][]` | — | Rijen als arrays van celinhoud — een cel mag een willekeurige node zijn |
-| `onRowClick` | `(row, index) => void` | — | Maakt een rij klikbaar én toetsenbord-bedienbaar (Enter/spatie, `role="button"`, `tabIndex` 0) met zichtbare focus. Zonder `onRowClick` is een rij een gewone `<tr>` |
+| `onRowClick` | `(row, index) => void` | — | Maakt een rij klikbaar én toetsenbord-bedienbaar (Enter/spatie, `tabIndex` 0) met zichtbare focus. Een klik/toets op een interactief element ín een cel activeert de rij niet. Zonder `onRowClick` is een rij een gewone `<tr>` |
 | `rowKey` | `(row, index) => Key` | rij-index | Sleutel per rij |
 | `rowClassName` | `(row, index) => string \| undefined` | — | Optionele class per rij (bijv. voor markeringen), naast `vic-table__row--clickable` |
 | `className` | `string` | — | Extra class(es), toegevoegd náást de `vic-table`-klasse (niet in plaats ervan) |

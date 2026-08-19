@@ -11,8 +11,8 @@ Tabel in VIC-stijl: groene headerbalk, witte/zachtgroene rijen, donkerblauwe tek
 ```
 
 Rijen klikbaar maken: geef `onRowClick` mee — de rij wordt dan ook met Enter/spatie
-bedienbaar (`role="button"`, zichtbare focus) en niet alleen met de muis. `rowKey` en
-`rowClassName` zijn optioneel, voor een stabiele sleutel per rij en een eigen markering:
+bedienbaar (zichtbare focus) en niet alleen met de muis. `rowKey` en `rowClassName`
+zijn optioneel, voor een stabiele sleutel per rij en een eigen markering:
 
 ```jsx
 <DataTable

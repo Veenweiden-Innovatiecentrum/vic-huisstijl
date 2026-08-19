@@ -11,8 +11,9 @@ export interface DataTableProps {
   rows: ReactNode[][];
   /**
    * Rij-callback. Als deze is gezet wordt de rij klikbaar én
-   * toetsenbord-bedienbaar (Enter/spatie, role="button", tabIndex 0) met
-   * zichtbare focus. Zonder onRowClick is een rij een gewone <tr>.
+   * toetsenbord-bedienbaar (Enter/spatie, tabIndex 0) met zichtbare focus.
+   * Een klik/Enter/spatie op een interactief element ín een cel (knop, link)
+   * activeert de rij niet. Zonder onRowClick is een rij een gewone <tr>.
    */
   onRowClick?: (row: ReactNode[], index: number) => void;
   /** Sleutel per rij. Default: de rij-index (zoals nu). */

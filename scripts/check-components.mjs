@@ -70,22 +70,28 @@ ok('zebra-rijen (odd/even) gestyled in components.css',
 // 3a. DataTable: klikbare rijen zijn ook toetsenbord-bedienbaar (vic-platform#53)
 console.log('\n== DataTable: klikbare rijen — toetsenbord en zichtbare focus ==');
 const dataTableDts = read('components/core/DataTable.d.ts');
-ok('rij krijgt role="button" alleen als onRowClick is gezet',
-   /rowProps\.role = 'button'/.test(dataTableJs) && /if \(clickable\)/.test(dataTableJs));
-ok('rij krijgt tabIndex 0 alleen als onRowClick is gezet', /rowProps\.tabIndex = 0/.test(dataTableJs));
+ok('geen role="button" op de rij (dat zou de rij/cel-semantiek voor schermlezers overschrijven)',
+   !/rowProps\.role\b|\brole:\s*['"]button['"]/.test(dataTableJs));
+ok('rij krijgt tabIndex 0 alleen als onRowClick is gezet',
+   /rowProps\.tabIndex = 0/.test(dataTableJs) && /if \(clickable\)/.test(dataTableJs));
 ok('Enter activeert de rij', /e\.key === 'Enter'/.test(dataTableJs));
 ok('spatie activeert de rij (naast Enter, net als een echte knop)', /e\.key === ' '/.test(dataTableJs));
 ok('keydown-handler doet preventDefault (geen paginascroll bij spatie)',
    /onKeyDown[\s\S]{0,120}preventDefault/.test(dataTableJs));
-ok('rij zonder onRowClick blijft een gewone <tr> (tabIndex/role alleen gezet binnen if (clickable))',
+ok('rij zonder onRowClick blijft een gewone <tr> (tabIndex alleen gezet binnen if (clickable))',
    /const rowProps = \{\s*\n\s*key,\s*\n\s*className:/.test(dataTableJs) &&
    /if \(clickable\) \{\s*\n\s*rowProps\.tabIndex = 0/.test(dataTableJs));
+ok('een interactief element ín een cel (knop/link) activeert de rij niet (geen bubbelende onRowClick)',
+   /isInteractiveDescendant/.test(dataTableJs) &&
+   /if \(isInteractiveDescendant\(e\)\) return;/.test(dataTableJs) &&
+   /&& !isInteractiveDescendant\(e\)/.test(dataTableJs));
 ok('rowKey bepaalt de sleutel per rij (default: rij-index, zoals nu)',
    /rowKey \? rowKey\(row, r\) : r/.test(dataTableJs));
 ok('rowClassName geeft optioneel een class per rij (voor markeringen)',
    /rowClassName \? rowClassName\(row, r\) : undefined/.test(dataTableJs));
-ok('zichtbare focus (focus-visible) gestyled in components.css voor klikbare rijen',
+ok('zichtbare focus op klikbare rijen: outline (betrouwbaar op tr) mét focus-ring box-shadow',
    /\.vic-table tbody tr\.vic-table__row--clickable:focus-visible/.test(componentsCss) &&
+   /outline:\s*3px solid var\(--vic-green\)/.test(componentsCss) &&
    /box-shadow:\s*var\(--focus-ring\)/.test(componentsCss));
 ok('onRowClick gedocumenteerd in DataTable.d.ts', /onRowClick\?:/.test(dataTableDts));
 ok('rowKey gedocumenteerd in DataTable.d.ts', /rowKey\?:/.test(dataTableDts));

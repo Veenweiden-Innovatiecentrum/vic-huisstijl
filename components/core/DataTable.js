@@ -6,11 +6,22 @@ import React from 'react';
  * Styling komt uit components.css (tokens).
  *
  * Rijen zijn optioneel klikbaar via onRowClick — dan wordt de rij ook met
- * Enter/spatie bedienbaar (role="button", tabIndex) en krijgt hij zichtbare
- * focus. Zonder onRowClick blijft een rij een gewone <tr> (backwards compatibel).
+ * Enter/spatie bedienbaar (tabIndex) en krijgt hij zichtbare focus. Geen
+ * role="button": dat zou de rij/cel-semantiek van de tabel voor schermlezers
+ * overschrijven. Zonder onRowClick blijft een rij een gewone <tr> (backwards
+ * compatibel).
  */
 export function DataTable({ columns = [], rows = [], onRowClick, rowKey, rowClassName, className, style }) {
   const clickable = typeof onRowClick === 'function';
+
+  // Een klik of Enter/spatie op een interactief element ín een cel (een knop,
+  // link, ...) mag niet ook de rij activeren — anders vuurt onRowClick naast
+  // de eigen handler van dat element, en blokkeert preventDefault() diens
+  // eigen spatie-gedrag.
+  const isInteractiveDescendant = (e) => {
+    const el = e.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]');
+    return el !== null && el !== e.currentTarget;
+  };
 
   return React.createElement(
     'table',
@@ -37,10 +48,12 @@ export function DataTable({ columns = [], rows = [], onRowClick, rowKey, rowClas
 
         if (clickable) {
           rowProps.tabIndex = 0;
-          rowProps.role = 'button';
-          rowProps.onClick = () => onRowClick(row, r);
+          rowProps.onClick = (e) => {
+            if (isInteractiveDescendant(e)) return;
+            onRowClick(row, r);
+          };
           rowProps.onKeyDown = (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            if ((e.key === 'Enter' || e.key === ' ') && !isInteractiveDescendant(e)) {
               e.preventDefault();
               onRowClick(row, r);
             }
