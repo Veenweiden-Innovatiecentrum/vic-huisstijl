@@ -109,6 +109,10 @@
   min-width: 0;
   display: flex;
   align-items: center;
+  /* App-eigen knoppen staan rechts, tegen het accountrondje aan (Tims wens:
+     "specifieke functies links naast de gebruikersknop"). Het logo houdt
+     links z'n vaste plek; de lege ruimte valt in het midden. */
+  justify-content: flex-end;
   gap: var(--space-2);
   overflow-x: auto;
 }
