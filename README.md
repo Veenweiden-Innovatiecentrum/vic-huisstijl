@@ -273,7 +273,8 @@ gelden ook hier:
 
 ## Status
 
-`v0.3.0` (18-08-2026): `PlatformBalk` — de gedeelde bovenbalk voor hub, gids en
+`v0.3.1` (18-08-2026): app-eigen knoppen in `PlatformBalk` staan rechts, tegen het
+accountrondje aan (Tims wens). `v0.3.0` (18-08-2026): `PlatformBalk` — de gedeelde bovenbalk voor hub, gids en
 VIA | Collect (vic-platform#61, stap 1 van 3: het component hier; hub/gids en
 VIA | Collect zetten hun eigen topbalk in vervolg-PR's over op de gepinde nieuwe
 versie).

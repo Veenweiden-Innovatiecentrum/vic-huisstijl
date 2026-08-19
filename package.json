@@ -1,6 +1,6 @@
 {
   "name": "@veenweiden-innovatiecentrum/vic-huisstijl",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "VIC-huisstijl als design tokens (CSS-variabelen) en kerncomponenten (React): kleuren, typografie, spacing en fonts uit het VIC huisstijl 2024-handboek, plus Button, DataTable en PlatformBalk.",
   "license": "UNLICENSED",
   "repository": {
