@@ -66,6 +66,19 @@
   border-bottom: 1px solid var(--vic-border);
 }
 
+.vic-table tbody tr.vic-table__row--clickable { cursor: pointer; }
+.vic-table tbody tr.vic-table__row--clickable:hover { background: var(--vic-green-soft); }
+.vic-table tbody tr.vic-table__row--clickable:focus-visible {
+  /* outline ís de zichtbare focus: box-shadow op tr rendert niet overal
+     betrouwbaar (table-rows nemen box-shadow niet in elke browser mee),
+     dus geen outline: none — de solide groene rand is het echte contract. */
+  outline: 3px solid var(--vic-green);
+  outline-offset: -2px;
+  box-shadow: var(--focus-ring);
+  position: relative;
+  z-index: 1;
+}
+
 /* --- PlatformBalk --- */
 .vic-platformbalk {
   display: flex;

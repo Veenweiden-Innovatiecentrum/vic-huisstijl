@@ -20,6 +20,9 @@
     .knop:hover { background: var(--button-primary-hover); }
     .knop.secundair { background: var(--button-secondary); }
     .knop.secundair:hover { background: var(--button-secondary-hover); }
+    /* Demo-only markering via rowClassName — geen pakket-CSS, een consument (zoals
+       VIA | Collect) kiest zelf hoe een gemarkeerde rij eruitziet. */
+    .rij-geselecteerd td { border-left: 3px solid var(--vic-green); font-weight: 700; }
   </style>
 </head>
 <body>
@@ -72,6 +75,8 @@
           pagina daarna via <code>http://localhost:…/voorbeeld/</code>.
         </p>
       </div>
+      <h3 class="vic-h3">DataTable met klikbare rijen (onRowClick, rowKey, rowClassName)</h3>
+      <div id="components-demo-clickable"></div>
     </section>
 
     <section class="card" style="padding: 0;">
@@ -142,6 +147,31 @@
     );
 
     createRoot(document.getElementById('components-demo')).render(demo);
+
+    function KlikbareTabel() {
+      const [gekozen, setGekozen] = React.useState(null);
+      return React.createElement(
+        'div',
+        { style: { display: 'grid', gap: 'var(--space-2)' } },
+        React.createElement(
+          'p',
+          { className: 'vic-body', id: 'clickable-status' },
+          gekozen == null ? 'Nog geen rij gekozen.' : `Gekozen: ${gekozen}`
+        ),
+        React.createElement(DataTable, {
+          columns: ['Invalshoek', 'Activiteit', 'Status'],
+          rows: [
+            ['Water', 'Klimaatslootjes', 'Lopend'],
+            ['Bodem', 'Greppelinfiltratie', 'Afgerond'],
+            ['Plant', 'Natte teelten — lisdodde', 'Lopend'],
+          ],
+          rowKey: (row) => row[0],
+          rowClassName: (row) => (row[0] === gekozen ? 'rij-geselecteerd' : undefined),
+          onRowClick: (row) => setGekozen(row[0]),
+        })
+      );
+    }
+    createRoot(document.getElementById('components-demo-clickable')).render(React.createElement(KlikbareTabel));
 
     // Drie apps, dezelfde balk (vic-platform#61) — alleen het middenstuk verschilt.
     createRoot(document.getElementById('platformbalk-demo-hub')).render(
