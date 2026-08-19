@@ -19,8 +19,8 @@ export function DataTable({ columns = [], rows = [], onRowClick, rowKey, rowClas
   // de eigen handler van dat element, en blokkeert preventDefault() diens
   // eigen spatie-gedrag.
   const isInteractiveDescendant = (e) => {
-    const el = e.target.closest('a, button, input, select, textarea, [role="button"], [contenteditable]');
-    return el !== null && el !== e.currentTarget;
+    const el = e.target.closest('a, button, input, select, textarea, label, [role="button"], [contenteditable]');
+    return el !== null && el !== e.currentTarget && e.currentTarget.contains(el);
   };
 
   return React.createElement(
