@@ -16,14 +16,22 @@ interface ButtonOwnProps {
 }
 
 /**
- * Native knop- én link-attributen (title, aria-*, type, target, rel, ...) zijn
+ * Native knop- én link-attributen (title, aria-*, target, rel, ...) zijn
  * toegestaan naast de props hierboven — de implementatie spreidt ze door naar
  * het onderliggende element (<button> zonder href, <a> met href).
+ *
+ * `type` ligt apart: op <button> is dat 'button' | 'submit' | 'reset', op <a>
+ * een willekeurige MIME-string (bijv. bij een download-link). Een simpele
+ * intersectie van beide attribuut-sets zou `type` versmallen tot alleen de
+ * knop-variant en `<Button href="/rapport.pdf" type="application/pdf">` ten
+ * onrechte afkeuren — dus `type` krijgt de union van beide element-types.
  */
 type ButtonNativeProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement> & AnchorHTMLAttributes<HTMLAnchorElement>,
-  keyof ButtonOwnProps
->;
+  keyof ButtonOwnProps | 'type'
+> & {
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'] | AnchorHTMLAttributes<HTMLAnchorElement>['type'];
+};
 
 /**
  * VIC knop — groen primair, blauw secundair, outline of tekstlink met pijl.
