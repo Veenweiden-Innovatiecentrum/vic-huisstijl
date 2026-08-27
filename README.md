@@ -154,6 +154,28 @@ die gesynchroniseerd moet blijven met de tokens, en de props-API blijft ongewijz
 Varianten: `primary` (groen), `secondary` (donkerblauw), `outline` (groene rand),
 `link` (groene tekstlink met →). Copy in zinskast, nooit hoofdletters.
 
+**Native attributen mogen erbij** (sinds `0.4.1`, vic-huisstijl#10): naast de props
+hierboven accepteert `ButtonProps` ook de native knop-/link-attributen van
+`<button>` en `<a>` (`title`, alle `aria-*`, `type`, `target`, `rel`, `id`,
+`data-*`, ...) — de implementatie spreidde ze via `...rest` altijd al door naar
+het element, alleen de types stonden dat nog niet toe. Zo hoeft een consument
+niet meer een `<span title="...">` om de knop heen te zetten om bijvoorbeeld een
+tooltip of `aria-label` mee te geven (dat moest via-collect nog doen bij
+vic-platform#53 stap 3):
+
+```jsx
+<Button variant="primary" title="Downloadt het jaarverslag als pdf" aria-label="Download het jaarverslag" type="button">
+  Download
+</Button>
+<Button variant="link" href="/bedrijf" title="Ga naar de bedrijfspagina" aria-label="Zie onze activiteiten (opent bedrijfspagina)">
+  Zie onze activiteiten
+</Button>
+```
+
+Bestaand gebruik (alleen de props uit de tabel hierboven) blijft ongewijzigd
+werken. Een werkend voorbeeld staat in [`voorbeeld/index.html`](voorbeeld/index.html),
+sectie "Componenten".
+
 **`DataTable`** (props uit `components/core/DataTable.d.ts`):
 
 | Prop | Type | Default | Omschrijving |
@@ -288,6 +310,11 @@ gelden ook hier:
   handboek — of het handboek wordt eerst bewust aangepast, nooit stilzwijgend.
 
 ## Status
+
+`v0.4.1` (27-08-2026): `ButtonProps` staat native knop-/link-attributen toe
+(`title`, `aria-*`, `type`, `target`, `rel`, ...) — de implementatie spreidde ze
+al door via `...rest`, alleen de types blokkeerden ze nog (vic-huisstijl#10).
+Achterwaarts compatibel: bestaand gebruik blijft ongewijzigd werken.
 
 `v0.4.0` (19-08-2026): `DataTable` ondersteunt klikbare rijen (`onRowClick`, met
 Enter/spatie en zichtbare focus), `rowKey` en `rowClassName` — nodig om de tabellen
