@@ -67,6 +67,11 @@
         Gerenderd door de echte <code>Button</code> en <code>DataTable</code> uit
         <code>@veenweiden-innovatiecentrum/vic-huisstijl/components</code> — geen losse demo-CSS.
       </p>
+      <p class="vic-body">
+        De onderste knoppenrij hieronder geeft <code>title</code> en <code>aria-label</code>
+        rechtstreeks aan <code>Button</code> mee (issue #10) — geen <code>&lt;span title&gt;</code>
+        er meer omheen nodig, zoals via-collect bij vic-platform#53 stap 3.
+      </p>
       <div id="components-demo">
         <p class="vic-body" id="components-demo-fallback" hidden>
           Dit gedeelte gebruikt ES modules en laadt niet via <code>file://</code> (dubbelklikken op dit
@@ -135,6 +140,20 @@
         React.createElement(Button, { variant: 'primary', size: 'sm' }, 'Klein'),
         React.createElement(Button, { variant: 'primary', size: 'md' }, 'Middel'),
         React.createElement(Button, { variant: 'primary', size: 'lg' }, 'Groot')
+      ),
+      React.createElement(
+        'div',
+        { id: 'native-attrs-demo', style: { display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' } },
+        React.createElement(
+          Button,
+          { variant: 'primary', title: 'Downloadt het jaarverslag als pdf', 'aria-label': 'Download het jaarverslag', type: 'button' },
+          'Download'
+        ),
+        React.createElement(
+          Button,
+          { variant: 'link', href: '#', title: 'Ga naar de bedrijfspagina', 'aria-label': 'Zie onze activiteiten (opent bedrijfspagina)' },
+          'Zie onze activiteiten'
+        )
       ),
       React.createElement(DataTable, {
         columns: ['Invalshoek', 'Activiteit', 'Status'],
